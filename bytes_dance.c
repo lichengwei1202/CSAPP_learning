@@ -147,3 +147,36 @@ bool leftmost_ones(unsigned x)
 
     return (x>>1) + (x &&1);
 }
+
+//2.67
+
+int int_size_is_32(void)
+{
+    int set_msb = 1<<31;
+
+    return set_msb && set_msb<<1;
+}
+
+//2.68 返回一个整数，其二进制从最低位开始的n位为1， 其余为0；
+
+int lower_one_mask(int n)
+{
+    int base = 0x80000000;
+
+    return ~(base>>(32-n-1));
+}
+
+//2.69 返回一个二进制数，按照n循环左移
+int rotate_left(unsigned x, int n)
+{
+    int w = sizeof(int)<<3;
+
+    return (x<<n)|(x>>(w-n));
+}
+
+//2.70 判断一个n位的补码，能够表示的数的范围为大
+
+int fit_bits(int x, int n)
+{
+    
+}

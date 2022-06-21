@@ -19,3 +19,6 @@ bool int_shift_are_arithmetic(void);
 unsigned srl(unsigned x, int k);
 unsigned sra(int x, int k);
 bool any_odd_one(unsigned x);
+int int_size_is_32(void);
+int lower_one_mask(int n);
+int rotate_left(unsigned x, int n);
