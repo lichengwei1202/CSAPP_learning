@@ -2,7 +2,9 @@
 #include<string.h>
 #include<stdlib.h>
 #include <stdbool.h>
-typedef unsigned char * byte_pointer; 
+#include <limits.h>
+typedef unsigned char * byte_pointer; //数据中单字节的指针
+typedef unsigned packed_t; //封装一个字长为4的unsigned，作为xbyte的输入
 void show_bytes(byte_pointer s, size_t len);
 void show_int(int t);
 void show_long(long t);
@@ -22,3 +24,9 @@ bool any_odd_one(unsigned x);
 int int_size_is_32(void);
 int lower_one_mask(int n);
 int rotate_left(unsigned x, int n);
+int xbyte(packed_t n, int bytenum);
+int saturating_add(int x,int y);
+unsigned unsigned_high_prod(unsigned x, unsigned y);
+int signed_high_prod(int x, int y);
+void *calloc_simulate(size_t memb, size_t size);
+int multiply_17(int x);

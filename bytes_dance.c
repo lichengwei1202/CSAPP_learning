@@ -178,5 +178,134 @@ int rotate_left(unsigned x, int n)
 
 int fit_bits(int x, int n)
 {
+    int w = sizeof(int)<<3;
+
+    return x == x<<(w-n)>>(w-n);
+}
+
+//2.71 将一个字长为4的字中的第n个字节截取出来扩展成一个新的字（32位）
+
+/*先对字进行封装*/
+typedef unsigned packed_t;
+
+int xbyte(packed_t n, int bytenum)
+{
+    int w = sizeof(packed_t);
+    return (int) n<<((w-bytenum-1)<<3)>>((w-1)<<3);
+}
+
+//2.72 将一个整数复制进一个缓冲buf里，如果buf的空间不够时，则不执行该操作
+
+void copy_int(int val, void *buf, int maxbytes)
+{
+    if (maxbytes - (int) sizeof(buf)>=0)
+    {
+        memcpy(buf, (void *) &val, sizeof(val));
+    }
+    
+}
+
+//2.73 
+
+int saturating_add(int x,int y)
+{
+    int sum = x+y;
+    int mask = INT_MIN;
+    int pos_over = !(x&mask)&&!(y&mask)&&(sum&mask);
+    int neg_over = (x&mask)&&(y&mask)&&!(sum&mask);
+    (pos_over&&(sum=INT_MAX))||(neg_over&&(sum=INT_MIN));//这段是求教大佬得到的，实在精妙
+    return sum;
+}
+
+//2.74 判断两个数相减是否会溢出
+
+int tsub_ok(int x, int y)
+{
+    int sub = x-y;
+
+    return !(x<0&&y>0&&sub>0)||(x>0&&y<0&&sub<0);
+}
+
+//2.75_1 显示无符号数乘积的高w位
+
+unsigned unsigned_high_prod(unsigned x, unsigned y)
+{
+    return ((uint64_t)((int64_t) signed_high_prod(x, y)<<(sizeof(int)<<3)))>>(sizeof(int)<<3);
+}
+
+//2.75_2 显示有符号数乘积的高w位
+
+int signed_high_prod(int x, int y)
+{
+    int64_t result = (int64_t)x*y;
+    return result>>(sizeof(int)<<3);
+}
+
+//2.76 以malloc函数和memset为基础模拟calloc函数，按块分配空间
+
+void *calloc_simulate(size_t memb, size_t size)
+{
+    int num = memb * size;
+
+    if (memb==num/size)
+    {
+        return memset(malloc(memb*size), 0, memb*size);    
+    }
+    else
+    {
+        printf("error");
+        return NULL;
+    }
+    
+}
+
+//2.77 用位移和加减法实现乘法
+
+int multiply_17(int x)
+{
+    return (x<<4)+x;
+}
+
+int multiply_minus_7(int x)
+{
+    return x-x<<3;
+}
+
+int multiply_60(int x)
+{
+    return x<<6-x<<2;
+}
+
+int multiply_minus_112(int x)
+{
+    return x<<4-x<<7;
+}
+
+//2.78 用位移和加减实现除法
+int divide_power2(int x, int k)
+{
+    return (x+(1<<k)-1)>>k;//补码除法向下舍入
+}
+
+//2.79 
+int mul13div4(int x)
+{
+    int init = x<<1+x;
+
+    if (init/x==3)
+    {
+        return (init+(1<<2)-1)>>2;
+    }
+    else
+    {
+        return NULL;
+    }
+    
+    
+}
+
+//2.80
+int threefourths(int x)
+{
     
 }
